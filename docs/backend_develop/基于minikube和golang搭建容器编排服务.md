@@ -1,3 +1,5 @@
+### 基于minikube和golang搭建容器编排服务
+
 ### 引言
 
 最近在自己电脑上搭建一个小型k8s环境，以学习云原生相关内容。这里我主要分为三部分记录：
@@ -12,9 +14,11 @@
 容器技术中有三个核心概念：容器（Container）、镜像（Image），以及镜像仓库（Registry）
 
 如何通过Docker File构建镜像？
-=> 首先编写Docker File文件, Docker build 命令构建镜像 ,Docker run 依照新编写好的镜像运行容器实例。
+=> 首先编写Docker File文件, Docker build 命令构建镜像, Docker run 依照新编写好的镜像运行容器实例。
 
-操作容器的常用命令有 `docker ps、docker run、docker exec、docker stop `等；操作镜像的常用命令有 `docker images、docker rmi、docker build、docker tag` 等；操作镜像仓库的常用命令有 `docker pull、docker push` 等。
+操作容器的常用命令有 `docker ps、docker run、docker exec、docker stop `等；
+操作镜像的常用命令有 `docker images、docker rmi、docker build、docker tag` 等；
+操作镜像仓库的常用命令有 `docker pull、docker push` 等。
 
 Kubernetes 就是一个生产级别的容器编排平台和集群管理系统，不仅能够创建、调度容器，还能够监控、管理服务器。
 
@@ -33,6 +37,8 @@ docker和k8s之间的区别，一个是容器技术，一个是容器编排技�
 我的电脑是mac m2，因此需要安装一些arm架构的软件。首先安装docker，主要使用的命令记录：
 
 ```
+下载dock arm架构的桌面版本安装。
+
 因为安装的是docker 桌面版本,终端可能找不到docker命令，因此添加环境变量:
 export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 
@@ -68,7 +74,8 @@ Server Version: v1.28.3
 
 ### 三、rpcx服务实战
 
-[`RPCX`](https://rpcx.io/)是一个分布式的Go语言的 RPC 框架，支持Zookepper、etcd、consul多种服务发现方式，多种服务路由方式，这里首先基于该框架在本机测试代码，之后开始考虑生成镜像并本地部署。
+[`RPCX`](https://rpcx.io/)是一个分布式的Go语言的 RPC 框架，支持Zookepper、etcd、consul多种服务发现方式，多种服务路由方式。
+这里首先基于该框架在本机测试代码，之后开始考虑生成镜像并本地部署。
 
 #### 3.1 本地运行及测试服务代码
 
@@ -142,7 +149,7 @@ func main() {
 
 ```
 
-本地通过`go run`测试验证成功。
+本地通过`go run`开启双窗口测试验证成功。
 
 #### 3.2 编写dockfile生成镜像
 
